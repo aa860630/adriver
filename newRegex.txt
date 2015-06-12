@@ -51,6 +51,7 @@ yimg.com/i/i/de/cat/yahoo.html
 yimg.com/la/i/wan/widgets/wjobs/
 yimg.com/rq/darla/
 yimg.com /billboardv2r5min.js
+google_ads_iframe
 yimg.com /darla-secure-pre-min.js
 yimg.com /fairfax/$image
 yimg.com /flash/promotions/
@@ -62,3 +63,12 @@ yimg.com _east.swf
 yimg.com _north.swf
 yimg.com _west.swf
 youtube.com _reklama_
+b.ynet.co.il
+ynetbanneradmin
+YnetBannerAdmin
+d2.zedo.com
+xads.zedo.com
+yads.zedo.com
+z1.zedo.com
+ads.one.co.il
+tpc.googlesyndication.com container
