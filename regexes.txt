@@ -3,8 +3,8 @@ cistor.pl /ads_files/
 nysa.eu /ads_files/
 wrzesnia.pl /ads_files/
 74.ru banner
-74.ru "ban"
-74.ru "sb_"
+74.ru \"ban\"
+74.ru \"sb_\"
 cbs.com /adblock.js
 cbs.com /adblockr.javascript
 /a1/ ?sub=$third-party
@@ -9283,9 +9283,9 @@ http://affiliate.glbtracker.com
 http://affiliate.godaddy.com
 http://affiliates.score-affiliates.com
 http://aflrm.com
-http://amzn.to > img[src^="data
+http://amzn.to > img[src^=\"data
 http://api.ringtonematcher.com
-http://api.taboola.com[href ="/recommendations.notify-click?app.type=
+http://api.taboola.com[href =\"/recommendations.notify-click?app.type=
 http://at.atwola.com
 http://banners.victor.com/processing
 http://bc.vc/?r=
@@ -9325,7 +9325,7 @@ http://fsoft4down.com
 http://fusionads.net
 http://galleries.pinballpublishernetwork.com
 http://galleries.securewebsiteaccess.com
-http://games.ucoz.ru[target="_blank
+http://games.ucoz.ru[target=\"_blank
 http://gca.sh/user/register?ref=
 http://getlinksinaseconds.com
 http://go.seomojo.com/tracking202
@@ -9360,7 +9360,7 @@ http://serve.williamhill.com/promoRedirect?
 http://server.cpmstar.com/click.aspx?poolid=
 http://sharesuper.info
 http://t.wowtrk.com
-http://taboola-[href ="/redirect.php?app.type=
+http://taboola-[href =\"/redirect.php?app.type=
 http://tour.affbuzzads.com
 http://track.adform.net
 http://tracking.crazylead.com

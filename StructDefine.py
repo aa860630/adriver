@@ -1,5 +1,5 @@
 filterStrings = """
-sfilters filters{
+struct sfilters filters[] = {
 """
 with open ("regexes.txt") as stringsFile:
 	for l in stringsFile.readlines():
@@ -7,7 +7,7 @@ with open ("regexes.txt") as stringsFile:
 		filterStrings +="\t" + "{" + str(len(nex)) + ", {" 
 		nex = ["\"" + f + "\"" for f in nex]
 		filterStrings += ",".join(nex)
-		filterStrings += " } } \n "
+		filterStrings += " } }, \n "
 
 filterStrings  += """
 };"""
