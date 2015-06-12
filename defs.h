@@ -6,10 +6,12 @@
 #define GET_PREFIX          "GET "
 #define GET_PREFIX_LEN      (sizeof(GET_PREFIX) - 1)
 
+#define MAX_MATCHES         (3)
+
 // string filters;
 struct sfilter {
     size_t num_matches;
-    char **matches;
+    char *matches[MAX_MATCHES];
 };
 extern struct sfilter sfilters[];
 extern size_t num_sfilters;
