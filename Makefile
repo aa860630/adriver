@@ -20,4 +20,4 @@ PWD=$(shell pwd)
 all:
 	make -C $(KDIR) M=$(PWD) modules
 clean:
-	rm -rf *.o *.ko *.mod.c modules.order Module.symvers .tmp_versions
+	rm -rf .*.cmd *.o *.ko *.mod.c modules.order Module.symvers .tmp_versions
