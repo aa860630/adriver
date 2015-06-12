@@ -4,6 +4,8 @@ ifeq ($(DEBUG),y)
 	CFLAGS_send_reset.o += -DDEBUG
 	CFLAGS_sfilter.o += -DDEBUG
 	CFLAGS_filters.o += -DDEBUG
+	CFLAGS_memmem.o += -DDEBUG
+	# this is getting stupid
 endif
 
 ifeq ($(ANDROID),y)
@@ -12,7 +14,7 @@ else
 	KDIR := /lib/modules/$(shell uname -r)/build
 endif
 
-ad-objs := main.o send_reset.o sfilter.o filters.o
+ad-objs := main.o send_reset.o sfilter.o filters.o memmem.o
 obj-m := ad.o
 
 PWD=$(shell pwd)

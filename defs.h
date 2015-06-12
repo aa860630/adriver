@@ -6,7 +6,9 @@
 #define GET_PREFIX          "GET "
 #define GET_PREFIX_LEN      (sizeof(GET_PREFIX) - 1)
 
-#define MAX_MATCHES         (3)
+#define MAX_DNS_REQ_LEN     (2048)
+
+#define MAX_MATCHES         (5)
 
 // string filters;
 struct sfilter {
@@ -23,3 +25,5 @@ extern size_t num_dns_sfilters;
 struct sk_buff;
 void send_reset(struct sk_buff *oldskb, int hook);
 bool run_sfilters(char *s);
+
+void *memmem(const void *haystack, size_t hlen, const void *needle, size_t nlen);
