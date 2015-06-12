@@ -8,7 +8,7 @@
 #include "defs.h"
 
 
-static void print_sfilter(struct sfilter *sf)
+static void print_sfilter(const struct sfilter *sf)
 {
     int i = 0;
 
@@ -20,37 +20,43 @@ static void print_sfilter(struct sfilter *sf)
     pr_debug("\n");
 }
 
-static bool run_sfilter(struct sfilter *sf, char *s)
+static bool run_sfilter(const struct sfilter *sf, const struct buf *buf)
 {
     int i = 0;
-    char *last = NULL;
-    char *match = NULL;
+    char *pos = NULL;
+    size_t left = 0;
 
-    last = s;
+    char *match = NULL;
+    size_t match_len = 0;
+
+    pos = buf->data;
+    left = buf->len;
     for (i = 0; i < sf->num_matches; ++i)
     {
         match = sf->matches[i];
+        match_len = strlen(match);
 
-        last = strstr(last, match);
-        if (!last)
+        pos = memmem(pos, left, match, match_len);
+        if (!pos)
         {
             return false;
         }
 
-        last += strlen(match);
+        pos += match_len;
+        left -= match_len;
     }
 
     print_sfilter(sf); // for debugging
     return true;
 }
 
-static bool run_sfilters(struct sfilter *sfilters[], size_t num_sfilters, char *s)
+static bool run_sfilters(const struct sfilter *sfilters, size_t num_sfilters, const struct buf *buf)
 {
     int i = 0;
 
     for (i = 0; i < num_sfilters; ++i)
     {
-        if (run_sfilter(&sfilters[i], s))
+        if (run_sfilter(&sfilters[i], buf))
         {
             return true;
         }
@@ -59,12 +65,12 @@ static bool run_sfilters(struct sfilter *sfilters[], size_t num_sfilters, char *
     return false;
 }
 
-bool run_get_sfilters(char *s)
+bool run_get_sfilters(const struct buf *buf)
 {
-    return run_sfilter(&get_sfilters, num_get_sfilters, s);
+    return run_sfilters(get_sfilters, num_get_sfilters, buf);
 }
 
-bool run_dns_sfilters(char *s)
+bool run_dns_sfilters(const struct buf *buf)
 {
-    return run_sfilter(&dns_sfilders, num_dns_sfilters, s);
+    return run_sfilters(dns_sfilters, num_dns_sfilters, buf);
 }

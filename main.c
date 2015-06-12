@@ -16,12 +16,12 @@
 // currently, this implies
 //   1. packet is TCP
 //   2. TCP data starts with "GET "
-static char *should_run_get_sfilter(struct sk_buff *skb)
+static struct buf *should_run_get_sfilter(struct sk_buff *skb)
 {
     // data we read from each packet
     // large enough to contain whatever we'll extract from the packet
-    // +1 for null term
-    static char _data[MAX_GET_LINE_LEN + 1];
+    static char _data[MAX_GET_LINE_LEN];
+    static struct buf last_buf;
 
     struct iphdr _ip, *ip = NULL;
     size_t tcp_off = 0;
@@ -30,10 +30,12 @@ static char *should_run_get_sfilter(struct sk_buff *skb)
     char *data = NULL;
     size_t data_len = 0;
 
+    last_buf.data = NULL;
+
     if (!skb)
     {
         pr_debug("skb is null\n");
-        return NULL;
+        goto done;
     }
 
     // check for ip
@@ -42,14 +44,14 @@ static char *should_run_get_sfilter(struct sk_buff *skb)
     if (!ip)
     {
         pr_debug("can't get ip hdr\n");
-        return NULL;
+        goto done;
     }
 
     // check for tcp
     if (IPPROTO_TCP != ip->protocol)
     {
         pr_debug("ipproto != tcp, %d\n", ip->protocol);
-        return NULL;
+        goto done;
     }
 
     // get tcp header
@@ -58,7 +60,7 @@ static char *should_run_get_sfilter(struct sk_buff *skb)
     if (!tcp)
     {
         pr_debug("can't get tcp hdr\n");
-        return NULL;
+        goto done;
     }
 
     // reach to tcp data
@@ -67,43 +69,35 @@ static char *should_run_get_sfilter(struct sk_buff *skb)
     if (!data)
     {
         pr_debug("cant't get tcp data\n");
-        return NULL;
+        goto done;
     }
     if (0 != strncmp(data, GET_PREFIX, GET_PREFIX_LEN))
     {
         pr_debug("tcp payload is not GET\n");
-        return NULL;
+        goto done;
     }
 
     pr_debug("tcp data is GET!\n");
 
     // okay, now get the entire get line
     data_len = min_t(size_t, skb->len - data_off, MAX_GET_LINE_LEN);
-
     data = skb_header_pointer(skb, data_off, data_len, _data);
-    // we want to null terminate it. if skb_header_pointer didn't copy (because this part
-    // is linear), we'll do the copy ourself
-    if (data != _data)
-    {
-        memcpy(_data, data, data_len);
-        data = _data;
-    }
 
-    // null terminate it
-    data[data_len] = '\0';
+    last_buf.data = data;
+    last_buf.len = data_len;
 
-    pr_debug("get string: %s\n", data);
-
-    return data;
+done:
+    return &last_buf;
 }
 
 // decides if we should run dns sfilters on a packet
 // this implies all UDP packets destined to port 53.
-static char *should_run_dns_sfilter(struct sk_buff *skb)
+static struct buf *should_run_dns_sfilter(struct sk_buff *skb)
 {
     // data we read from each packet.
     // large enough to contain whatever we'll extract from the packet
-    static char _data[MAX_DNS_REQ_LEN];
+    static char _data[MAX_DNS_QUERY_LEN];
+    static struct buf last_buf;
 
     struct iphdr _ip, *ip = NULL;
     size_t udp_off = 0;
@@ -112,10 +106,12 @@ static char *should_run_dns_sfilter(struct sk_buff *skb)
     char *data = NULL;
     size_t data_len = 0;
 
+    last_buf.data = NULL;
+
     if (!skb)
     {
         pr_debug("skb is null\n");
-        return NULL;
+        goto done;
     }
 
     // check for ip
@@ -124,14 +120,14 @@ static char *should_run_dns_sfilter(struct sk_buff *skb)
     if (!ip)
     {
         pr_debug("can't get ip hdr\n");
-        return NULL;
+        goto done;
     }
 
     // check for udp
     if (IPPROTO_UDP != ip->protocol)
     {
         pr_debug("ipproto != udp, %d\n", ip->protocol);
-        return NULL;
+        goto done;
     }
 
     // get udp header
@@ -140,55 +136,57 @@ static char *should_run_dns_sfilter(struct sk_buff *skb)
     if (!udp)
     {
         pr_debug("can't get udp hdr\n");
-        return NULL;
+        goto done;
     }
-    if (53 != ntohs(udp->dport))
+    if (53 != ntohs(udp->dest))
     {
-        pr_debug("udp dport != 53, %d\n" ntohs(udp->dport));
+        pr_debug("udp dport != 53, %d\n", ntohs(udp->dest));
+        goto done;
     }
 
     // reach to udp data
     data_off = udp_off + sizeof(*udp);
-    // get some of the request
-    data_len = min_t(size_t, skb->len - data_off, MAX_DNS_REQ_LEN);
-
+    // probably the entire query
+    data_len = min_t(size_t, skb->len - data_off, MAX_DNS_QUERY_LEN);
     data = skb_header_pointer(skb, data_off, data_len, _data);
-    // we want to null terminate it. if skb_header_pointer didn't copy (because this part
-    // is linear), we'll do the copy ourself
-    if (data != _data)
-    {
-        memcpy(_data, data, data_len);
-        data = _data;
-    }
 
-    // null terminate it
-    data[data_len] = '\0';
+    last_buf.data = data;
+    last_buf.len = data_len;
 
-    pr_debug("get string: %s\n", data);
-
-    return data;
+done:
+    return &last_buf;
 }
 
 
 static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const struct net_device *in,
     const struct net_device *out, int (*okfn)(struct sk_buff *))
 {
-    unsigned char *get_line = NULL;
+    struct buf *buf = NULL;
 
-    get_line = should_run_get_sfilter(skb);
-    if (!get_line)
+    buf = should_run_get_sfilter(skb);
+    if (buf->data)
     {
-        // non-related packet
+        if (run_get_sfilters(buf))
+        {
+            // bye
+            pr_debug("get filter matched, dropping\n");
+            send_reset(skb, hooknum);
+            return NF_DROP;
+        }
+
+        // optimization: not DNS for sure
         return NF_ACCEPT;
     }
 
-    pr_debug("running sfilter\n");
-    if (run_get_sfilters(get_line))
+    buf = should_run_dns_sfilter(skb);
+    if (buf->data)
     {
-        // bye
-        pr_debug("filter matched, dropping\n");
-        send_reset(skb, hooknum);
-        return NF_DROP;
+        if (run_dns_sfilters(buf))
+        {
+            pr_debug("dns filter matched, dropping\n");
+            // just drop here, don't REJECT
+            return NF_DROP;
+        }
     }
 
     // non-related get
