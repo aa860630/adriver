@@ -25,10 +25,11 @@ extern const size_t num_dns_sfilters;
 struct sk_buff;
 void send_reset(struct sk_buff *oldskb, int hook);
 
-// like kvec
+// like kvec (but not)
 struct buf {
     char *data;
     size_t len;
+    bool should_free;
 };
 bool run_get_sfilters(const struct buf *buf);
 bool run_dns_sfilters(const struct buf *buf);
