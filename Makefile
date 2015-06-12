@@ -1,4 +1,5 @@
-obj-m = ad.o
+ad-objs := main.o send_reset.o
+obj-m := ad.o
 CFLAGS_ad.o := -DDEBUG
 
 KDIR=/lib/modules/$(shell uname -r)/build
