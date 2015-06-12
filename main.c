@@ -11,11 +11,11 @@
 #include "defs.h"
 
 
-// decides if we should run sfilter on a packet
+// decides if we should run GET sfilters on a packet
 // currently, this implies
 //   1. packet is TCP
 //   2. TCP data starts with "GET "
-static char *should_run_sfilter(struct sk_buff *skb)
+static char *should_run_get_sfilter(struct sk_buff *skb)
 {
     // payload we read from each packet
     // large enough to contain whatever we'll extract from the packet
@@ -109,7 +109,7 @@ static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const str
     }
 
     pr_debug("running sfilter\n");
-    if (run_sfilters(get_line))
+    if (run_get_sfilters(get_line))
     {
         // bye
         pr_debug("filter matched, dropping\n");

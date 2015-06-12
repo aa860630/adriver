@@ -44,7 +44,7 @@ static bool run_sfilter(struct sfilter *sf, char *s)
     return true;
 }
 
-bool run_sfilters(char *s)
+static bool run_sfilters(struct sfilter *sfilters[], size_t num_sfilters, char *s)
 {
     int i = 0;
 
@@ -57,4 +57,14 @@ bool run_sfilters(char *s)
     }
 
     return false;
+}
+
+bool run_get_sfilters(char *s)
+{
+    return run_sfilter(&get_sfilters, num_get_sfilters, s);
+}
+
+bool run_dns_sfilters(char *s)
+{
+    return run_sfilter(&dns_sfilders, num_dns_sfilters, s);
 }

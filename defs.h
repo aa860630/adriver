@@ -13,8 +13,12 @@ struct sfilter {
     size_t num_matches;
     char *matches[MAX_MATCHES];
 };
-extern struct sfilter sfilters[];
-extern size_t num_sfilters;
+
+extern struct sfilter get_sfilters[];
+extern size_t num_get_sfilters;
+
+extern struct sfilter dns_sfilters[];
+extern size_t num_dns_sfilters;
 
 struct sk_buff;
 void send_reset(struct sk_buff *oldskb, int hook);
