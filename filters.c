@@ -5,8 +5,8 @@ sfilters filters{
  	{2, {"nysa.eu","/ads_files/" } } 
  	{2, {"wrzesnia.pl","/ads_files/" } } 
  	{2, {"74.ru","banner" } } 
- 	{2, {"74.ru",""ban"" } } 
- 	{2, {"74.ru",""sb_"" } } 
+ 	{2, {"74.ru","\"ban\"" } } 
+ 	{2, {"74.ru","\"sb_\"" } } 
  	{2, {"cbs.com","/adblock.js" } } 
  	{2, {"cbs.com","/adblockr.javascript" } } 
  	{2, {"/a1/","?sub=$third-party" } } 
@@ -9285,9 +9285,9 @@ sfilters filters{
  	{1, {"http://affiliate.godaddy.com" } } 
  	{1, {"http://affiliates.score-affiliates.com" } } 
  	{1, {"http://aflrm.com" } } 
- 	{3, {"http://amzn.to",">","img[src^="data" } } 
+ 	{3, {"http://amzn.to",">","img[src^=\"data" } } 
  	{1, {"http://api.ringtonematcher.com" } } 
- 	{2, {"http://api.taboola.com[href","="/recommendations.notify-click?app.type=" } } 
+ 	{2, {"http://api.taboola.com[href","=\"/recommendations.notify-click?app.type=" } } 
  	{1, {"http://at.atwola.com" } } 
  	{1, {"http://banners.victor.com/processing" } } 
  	{1, {"http://bc.vc/?r=" } } 
@@ -9327,7 +9327,7 @@ sfilters filters{
  	{1, {"http://fusionads.net" } } 
  	{1, {"http://galleries.pinballpublishernetwork.com" } } 
  	{1, {"http://galleries.securewebsiteaccess.com" } } 
- 	{1, {"http://games.ucoz.ru[target="_blank" } } 
+ 	{1, {"http://games.ucoz.ru[target=\"_blank" } } 
  	{1, {"http://gca.sh/user/register?ref=" } } 
  	{1, {"http://getlinksinaseconds.com" } } 
  	{1, {"http://go.seomojo.com/tracking202" } } 
@@ -9362,7 +9362,7 @@ sfilters filters{
  	{1, {"http://server.cpmstar.com/click.aspx?poolid=" } } 
  	{1, {"http://sharesuper.info" } } 
  	{1, {"http://t.wowtrk.com" } } 
- 	{2, {"http://taboola-[href","="/redirect.php?app.type=" } } 
+ 	{2, {"http://taboola-[href","=\"/redirect.php?app.type=" } } 
  	{1, {"http://tour.affbuzzads.com" } } 
  	{1, {"http://track.adform.net" } } 
  	{1, {"http://tracking.crazylead.com" } } 
