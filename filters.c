@@ -2,7 +2,7 @@
 #include <linux/types.h>
 #include "defs.h"
 
-const struct sfilter getsfilters[] = {
+const struct sfilter get_sfilters[] = {
 	{1, {"media.admob.com" } }, 
  	{1, {"/gampad/ads" } }, 
  	{1, {".checkm8.com/adam/" } }, 
@@ -69,9 +69,9 @@ const struct sfilter getsfilters[] = {
  	{2, {"youtube.com","_reklama_" } }, 
  
 };
-const size_t num_getsfilters = sizeof(getsfilters) / sizeof(getsfilters[0]);
+const size_t num_get_sfilters = sizeof(get_sfilters) / sizeof(get_sfilters[0]);
 
-const struct sfilter dnssfilters[] = {
+const struct sfilter dns_sfilters[] = {
 	{3, {"media","admob","com" } }, 
  	{3, {"pagead2","googlesyndication","com" } }, 
  	{3, {"xads","zedo","com" } }, 
@@ -83,4 +83,4 @@ const struct sfilter dnssfilters[] = {
  	{3, {"partnerads1","ysm","yahoo" } }, 
  
 };
-const size_t num_dnssfilters = sizeof(dnssfilters) / sizeof(dnssfilters[0]);
+const size_t num_dns_sfilters = sizeof(dns_sfilters) / sizeof(dns_sfilters[0]);
