@@ -1,6 +1,7 @@
 // runs our filters on packet data
 
 #include <linux/kernel.h>
+#include <linux/string.h>
 
 #include "defs.h"
 
