@@ -10,10 +10,11 @@
 
 #include "defs.h"
 
+
 // temporary
 bool filter(unsigned char *data, size_t len)
 {
-    pr_alert("running filter, packet len %ld\n" ,len);
+    pr_debug("running filter, packet len %ld\n" ,len);
     hexdump(data, len);
     if (0x34 + 5 <= len && 0 == strncmp(data + 0x34, "hello", 5))
     {
@@ -40,21 +41,21 @@ static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const str
     ip = skb_header_pointer(skb, 0, sizeof(_ip), &_ip);
     if (!ip)
     {
-        pr_alert("can't get ip\n");
+        pr_debug("can't get ip\n");
         goto ok;
     }
 
     // check for tcp
     if (IPPROTO_TCP != ip->protocol)
     {
-        pr_alert("ipproto != tcp, %d\n", ip->protocol);
+        pr_debug("ipproto != tcp, %d\n", ip->protocol);
         goto ok;
     }
 
     // TODO: this is not so efficient. meh :)
     if (skb_linearize(skb))
     {
-        pr_alert("can't linearize!\n");
+        pr_debug("can't linearize!\n");
         goto ok; // not really, but nothing we can do
     }
 
@@ -65,12 +66,12 @@ static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const str
     if (filter(packet_data, packet_len))
     {
         // bye
-        pr_alert("filter ok\n");
+        pr_debug("filter ok\n");
         send_reset(skb, hooknum);
         return NF_DROP;
     }
 
-    pr_alert("filter failed\n");
+    pr_debug("filter failed\n");
 
 ok:
     return NF_ACCEPT;
