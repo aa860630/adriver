@@ -8,14 +8,10 @@
 #include <linux/ip.h>
 #include <linux/skbuff.h>
 
-#define MAX_PKT_SIZE    (0x800)
+#include "defs.h"
 
-#define hexdump(buf, len) print_hex_dump_bytes("", DUMP_PREFIX_OFFSET, (buf), (len))
-
-extern void send_reset(struct sk_buff *oldskb, int hook);
-//extern bool filter(unsigned char *data, size_t len);
-
-static bool filter(unsigned char *data, size_t len)
+// temporary
+bool filter(unsigned char *data, size_t len)
 {
     pr_alert("running filter, packet len %ld\n" ,len);
     hexdump(data, len);
