@@ -2,9 +2,10 @@ ifeq ($(DEBUG),y)
 	# CFLAGS_ad.o doesn't work :(
 	CFLAGS_main.o += -DDEBUG
 	CFLAGS_send_reset.o += -DDEBUG
+	CFLAGS_sfilter.o += -DDEBUG
 endif
 
-ad-objs := main.o send_reset.o
+ad-objs := main.o send_reset.o sfilter.o
 obj-m := ad.o
 
 KDIR=/lib/modules/$(shell uname -r)/build
