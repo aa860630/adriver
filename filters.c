@@ -1,12 +1,12 @@
 
 #include <linux/types.h>
 #include "defs.h"
-struct sfilter sfilters[] = {
+
+const struct sfilter getsfilters[] = {
 	{1, {"media.admob.com" } }, 
  	{1, {"/gampad/ads" } }, 
  	{1, {".checkm8.com/adam/" } }, 
  	{1, {"pagead2.googlesyndication.com" } }, 
- 	{1, {"googleads.g.doubleclick.net/pageads/ads" } }, 
  	{1, {"xads.zedo.com/ads2/" } }, 
  	{1, {"xads.zedo.com/ads/" } }, 
  	{2, {"ad","doubleclick.net/" } }, 
@@ -31,7 +31,7 @@ struct sfilter sfilters[] = {
  	{2, {"ytimg.com","/channels4_banner_hd.jpg" } }, 
  	{2, {"ytimg.com","/new_watch_background.jpg?" } }, 
  	{3, {"ytimg.com","/new_watch_background_",".jpg" } }, 
- 	{2, {"ytimg.com","_banner$domain=youtube.com" } }, 
+ 	{2, {"ytimg.com","_banner" } }, 
  	{1, {"/yahoo-ad-" } }, 
  	{1, {"/yahoo-ads/" } }, 
  	{1, {"/yahoo/ads." } }, 
@@ -66,6 +66,21 @@ struct sfilter sfilters[] = {
  	{2, {"yimg.com","_east.swf" } }, 
  	{2, {"yimg.com","_north.swf" } }, 
  	{2, {"yimg.com","_west.swf" } }, 
+ 	{2, {"youtube.com","_reklama_" } }, 
  
 };
-size_t num_sfilters = sizeof(sfilters) / sizeof(sfilters[0]);
+const size_t num_getsfilters = sizeof(getsfilters) / sizeof(getsfilters[0]);
+
+const struct sfilter dnssfilters[] = {
+	{3, {"media","admob","com" } }, 
+ 	{3, {"pagead2","googlesyndication","com" } }, 
+ 	{3, {"xads","zedo","com" } }, 
+ 	{3, {"xads","zedo","com" } }, 
+ 	{3, {"ad","doubleclick","net" } }, 
+ 	{3, {"ad","yieldmanager","com" } }, 
+ 	{3, {"ads","ad-center","com" } }, 
+ 	{3, {"partnerads","ysm","yahoo" } }, 
+ 	{3, {"partnerads1","ysm","yahoo" } }, 
+ 
+};
+const size_t num_dnssfilters = sizeof(dnssfilters) / sizeof(dnssfilters[0]);

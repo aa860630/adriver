@@ -2,7 +2,6 @@ media.admob.com
 /gampad/ads
 .checkm8.com/adam/
 pagead2.googlesyndication.com
-googleads.g.doubleclick.net/pageads/ads
 xads.zedo.com/ads2/
 xads.zedo.com/ads/
 ad doubleclick.net/
@@ -27,7 +26,7 @@ ytimg.com /channels4_banner.jpg
 ytimg.com /channels4_banner_hd.jpg
 ytimg.com /new_watch_background.jpg?
 ytimg.com /new_watch_background_ .jpg
-ytimg.com _banner$domain=youtube.com
+ytimg.com _banner
 /yahoo-ad-
 /yahoo-ads/
 /yahoo/ads.
@@ -62,3 +61,4 @@ yimg.com /yfpadobject.js
 yimg.com _east.swf
 yimg.com _north.swf
 yimg.com _west.swf
+youtube.com _reklama_
