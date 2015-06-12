@@ -1,0 +1,64 @@
+media.admob.com
+/gampad/ads
+.checkm8.com/adam/
+pagead2.googlesyndication.com
+googleads.g.doubleclick.net/pageads/ads
+xads.zedo.com/ads2/
+xads.zedo.com/ads/
+ad doubleclick.net/
+ad.yieldmanager.com/
+ads.ad-center.com/
+adsbygoogle.js
+yimg.com/gs/apex/mediastore/
+yimg.com /dianominewwidget2.html
+yimg.com /quickplay_maxwellhouse.png
+yimg.com /sponsored.js
+yimg.com _skin_
+google.com/jsapi?autoload= ads
+youtube-mp3.org/acode/
+youtube.com/yva_video?adformat
+s.ytimg.com/yts/swfbin/player- /watch_as3.swf
+youtube.com/yt/advertise/medias/images/
+youtube.com/yt/css/www-advertise.css
+youtube.com _adsense_
+ytimg.com/yts/img/channels/ _banner- .jpg
+ytimg.com/yts/img/channels/ _banner- .png
+ytimg.com /channels4_banner.jpg
+ytimg.com /channels4_banner_hd.jpg
+ytimg.com /new_watch_background.jpg?
+ytimg.com /new_watch_background_ .jpg
+ytimg.com _banner$domain=youtube.com
+/yahoo-ad-
+/yahoo-ads/
+/yahoo/ads.
+/yahoo_overture.
+/YahooAd_
+/yahooads.
+/yahooads/
+/yahooadsapi.
+/yahooadsobject.
+partnerads.ysm.yahoo.com
+partnerads1.ysm.yahoo.com
+yimg.com/ao/adv/
+yimg.com/cv/ae/ca/audience/
+yimg.com/cv/ae/us/audience/
+yimg.com/cv/eng/ .webm
+yimg.com/cv/eng/ /635x100_
+yimg.com/cv/eng/ /970x250_
+yimg.com/dh/ap/default/ /skins_
+yimg.com/hl/ap/ _takeover_
+yimg.com/hl/ap/default/ _background
+yimg.com/i/i/de/cat/yahoo.html
+yimg.com/la/i/wan/widgets/wjobs/
+yimg.com/rq/darla/
+yimg.com /billboardv2r5min.js
+yimg.com /darla-secure-pre-min.js
+yimg.com /fairfax/$image
+yimg.com /flash/promotions/
+yimg.com /ya-answers-dmros-ssl-min.js
+yimg.com /yad*.js
+yimg.com /yad.html
+yimg.com /yfpadobject.js
+yimg.com _east.swf
+yimg.com _north.swf
+yimg.com _west.swf

@@ -1,5 +1,5 @@
 filterStrings = '''\n#include <linux/types.h>\n#include "defs.h"\nstruct sfilter sfilters[] = {\n'''
-with open ("regexes.txt") as stringsFile:
+with open ("newRegex.txt") as stringsFile:
 	for l in stringsFile.readlines():
 		nex = l.strip().split(" ")
 		filterStrings +="\t" + "{" + str(len(nex)) + ", {" 
