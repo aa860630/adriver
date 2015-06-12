@@ -1,25 +1,49 @@
 #include <linux/string.h>
 
-// copied from http://stackoverflow.com/questions/2188914/c-searching-for-a-string-in-a-file
 
-void *memmem(const void *haystack, size_t hlen, const void *needle, size_t nlen)
+void *memmem(const void *haystack, size_t haystack_len, const void *needle, size_t needle_len)
 {
-    int needle_first;
-    const void *p = haystack;
-    size_t plen = hlen;
+    const char *pos = NULL;
+    const char *last_pos = NULL;
+    size_t left = 0;
+    int needle_first = 0;
 
-    if (!nlen)
-        return NULL;
-
-    needle_first = *(unsigned char *)needle;
-
-    while (plen >= nlen && (p = memchr(p, needle_first, plen - nlen + 1)))
+    // edge cases I don't wanna mess with
+    if (0 == needle_len || needle_len > haystack_len)
     {
-        if (!memcmp(p, needle, nlen))
-            return (void *)p;
+        return NULL;
+    }
 
-        p++;
-        plen = hlen - (p - haystack);
+    pos = haystack;
+    left = haystack_len;
+    needle_first = *(const char*)needle;
+
+    while (1)
+    {
+        last_pos = pos;
+        pos = memchr(last_pos, needle_first, left);
+        if (!pos)
+        {
+            break;
+        }
+
+        left -= (pos - last_pos);
+        if (needle_len > left)
+        {
+            break;
+        }
+
+        if (0 == memcmp(pos, needle, needle_len))
+        {
+            return (void*)pos;
+        }
+
+        pos++;
+        if (0 == left)
+        {
+            break;
+        }
+        left--;
     }
 
     return NULL;
