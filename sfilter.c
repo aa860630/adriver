@@ -4,13 +4,13 @@
 
 #include "defs.h"
 
-static bool run_sfilter(struct filter *sf, unsigned char *data, size_t len)
+static bool run_sfilter(struct sfilter *sf, char *s)
 {
     int i = 0;
     char *last = NULL;
     char *match = NULL;
 
-    last = data;
+    last = s;
     for (i = 0; i < sf->num_matches; ++i)
     {
         match = sf->matches[i];
@@ -27,13 +27,13 @@ static bool run_sfilter(struct filter *sf, unsigned char *data, size_t len)
     return true;
 }
 
-bool run_sfilters(unsigned char *data, size_t len)
+bool run_sfilters(char *s)
 {
     int i = 0;
 
     for (i = 0; i < num_sfilters; ++i)
     {
-        if (run_sfilter(&sfilters[i], data, len))
+        if (run_sfilter(&sfilters[i], s))
         {
             return true;
         }

@@ -2,38 +2,37 @@
 
 #include <linux/module.h>
 #include <linux/kernel.h>
-
 #include <linux/netfilter.h>
 #include <linux/netfilter_ipv4.h>
 #include <linux/ip.h>
+#include <linux/tcp.h>
 #include <linux/skbuff.h>
 
 #include "defs.h"
 
 
-// temporary
-bool filter(unsigned char *data, size_t len)
+// decides if we should run sfilter on a packet
+// currently, this implies
+//   1. packet is TCP
+//   2. TCP data starts with "GET "
+static char *should_run_sfilter(struct sk_buff *skb)
 {
-    pr_debug("running filter, packet len %ld\n" ,len);
-    hexdump(data, len);
-    if (0x34 + 5 <= len && 0 == strncmp(data + 0x34, "hello", 5))
-    {
-        return true;
-    }
+    // payload we read from each packet
+    // large enough to contain whatever we'll extract from the packet
+    // +1 for null term
+    static char _data[MAX_GET_LINE_LEN + 1];
 
-    return false;
-}
-
-static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const struct net_device *in,
-    const struct net_device *out, int (*okfn)(struct sk_buff *))
-{
     struct iphdr _ip, *ip = NULL;
-    unsigned char *packet_data = NULL;
-    size_t packet_len = 0;
+    size_t tcp_off = 0;
+    struct tcphdr _tcp, *tcp = NULL;
+    size_t data_off = 0;
+    char *data = NULL;
+    size_t data_len = 0;
 
     if (!skb)
     {
-        goto ok;
+        pr_debug("skb is null\n");
+        return NULL;
     }
 
     // check for ip
@@ -41,39 +40,82 @@ static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const str
     ip = skb_header_pointer(skb, 0, sizeof(_ip), &_ip);
     if (!ip)
     {
-        pr_debug("can't get ip\n");
-        goto ok;
+        pr_debug("can't get ip hdr\n");
+        return NULL;
     }
 
     // check for tcp
     if (IPPROTO_TCP != ip->protocol)
     {
         pr_debug("ipproto != tcp, %d\n", ip->protocol);
-        goto ok;
+        return NULL;
     }
 
-    // TODO: this is not so efficient. meh :)
-    if (skb_linearize(skb))
+    // get tcp header
+    tcp_off = ip->ihl * 4;
+    tcp = skb_header_pointer(skb, tcp_off, sizeof(_tcp), &_tcp);
+    if (!tcp)
     {
-        pr_debug("can't linearize!\n");
-        goto ok; // not really, but nothing we can do
+        pr_debug("can't get tcp hdr\n");
+        return NULL;
     }
 
-    // linearized, so this is ok
-    packet_len = skb->len;
-    packet_data = skb->data;
+    // reach to tcp data
+    data_off = tcp_off + tcp->doff * 4;
+    data = skb_header_pointer(skb, data_off, GET_PREFIX_LEN, _data);
+    if (!data)
+    {
+        pr_debug("cant't get tcp data\n");
+        return NULL;
+    }
+    if (0 != strncmp(data, GET_PREFIX, GET_PREFIX_LEN))
+    {
+        pr_debug("tcp payload is not GET\n");
+        return NULL;
+    }
 
-    if (filter(packet_data, packet_len))
+    pr_debug("tcp payload is GET!\n");
+
+    // okay, now get the entire get line
+    data_len = max_t(size_t, skb->len - data_off, MAX_GET_LINE_LEN);
+    data = skb_header_pointer(skb, data_off, data_len, _data);
+    // we want to null terminate it. if skb_header_pointer didn't copy (because this part
+    // is linear), we'll do the copy ourself
+    if (data != _data)
+    {
+        memcpy(_data, data, sizeof(data));
+        data = _data;
+    }
+
+    // null terminate it
+    data[data_len] = '\0';
+
+    pr_debug("get string: %s\n", data);
+
+    return data;
+}
+
+static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const struct net_device *in,
+    const struct net_device *out, int (*okfn)(struct sk_buff *))
+{
+    unsigned char *get_line = NULL;
+
+    get_line = should_run_sfilter(skb);
+    if (!get_line)
+    {
+        // non-related packet
+        return NF_ACCEPT;
+    }
+
+    if (run_sfilters(get_line))
     {
         // bye
-        pr_debug("filter ok\n");
+        pr_debug("filter matched, dropping\n");
         send_reset(skb, hooknum);
         return NF_DROP;
     }
 
-    pr_debug("filter failed\n");
-
-ok:
+    // non-related get
     return NF_ACCEPT;
 }
 static struct nf_hook_ops my_ops = {
