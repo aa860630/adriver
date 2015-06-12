@@ -74,16 +74,17 @@ static char *should_run_sfilter(struct sk_buff *skb)
         return NULL;
     }
 
-    pr_debug("tcp payload is GET!\n");
+    pr_debug("tcp data is GET!\n");
 
     // okay, now get the entire get line
-    data_len = max_t(size_t, skb->len - data_off, MAX_GET_LINE_LEN);
+    data_len = min_t(size_t, skb->len - data_off, MAX_GET_LINE_LEN);
+
     data = skb_header_pointer(skb, data_off, data_len, _data);
     // we want to null terminate it. if skb_header_pointer didn't copy (because this part
     // is linear), we'll do the copy ourself
     if (data != _data)
     {
-        memcpy(_data, data, sizeof(data));
+        memcpy(_data, data, data_len);
         data = _data;
     }
 
@@ -107,6 +108,7 @@ static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const str
         return NF_ACCEPT;
     }
 
+    pr_debug("running sfilter\n");
     if (run_sfilters(get_line))
     {
         // bye
