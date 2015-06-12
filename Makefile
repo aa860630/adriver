@@ -3,9 +3,10 @@ ifeq ($(DEBUG),y)
 	CFLAGS_main.o += -DDEBUG
 	CFLAGS_send_reset.o += -DDEBUG
 	CFLAGS_sfilter.o += -DDEBUG
+	CFLAGS_filters.o += -DDEBUG
 endif
 
-ad-objs := main.o send_reset.o sfilter.o
+ad-objs := main.o send_reset.o sfilter.o filters.o
 obj-m := ad.o
 
 KDIR=/lib/modules/$(shell uname -r)/build

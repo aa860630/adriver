@@ -1,5 +1,8 @@
+#include <linux/types.h>
 
-struct sfilters filters[] = {
+#include "defs.h"
+
+struct sfilter sfilters[] = {
 	{2, {"washingtonpost.com","/ad/audsci.js" } }, 
  	{2, {"cistor.pl","/ads_files/" } }, 
  	{2, {"nysa.eu","/ads_files/" } }, 
@@ -9087,7 +9090,7 @@ struct sfilters filters[] = {
  	{1, {".adsenseblock_top" } }, 
  	{1, {".adsenseformat" } }, 
  	{1, {".adsenseframe" } }, 
- 	{1, {".adsenseleaderboard" } }, 
+ 	{1, {".adsenseleaderboard" } },
  	{1, {".adsenselr" } }, 
  	{1, {".adsensem_widget" } }, 
  	{1, {".adsensemainpage" } }, 
@@ -9477,3 +9480,5 @@ struct sfilters filters[] = {
  	{1, {".brandpost_inarticle" } }, 
  
 };
+
+size_t num_sfilters = sizeof(sfilters) / sizeof(sfilters[0]);

@@ -4,6 +4,7 @@
 
 #include "defs.h"
 
+
 static bool run_sfilter(struct sfilter *sf, char *s)
 {
     int i = 0;
