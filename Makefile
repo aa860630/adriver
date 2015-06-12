@@ -6,10 +6,15 @@ ifeq ($(DEBUG),y)
 	CFLAGS_filters.o += -DDEBUG
 endif
 
+ifeq ($(ANDROID),y)
+	KDIR := ~/android/kernel/android_kernel_samsung_jf
+else
+	KDIR := /lib/modules/$(shell uname -r)/build
+endif
+
 ad-objs := main.o send_reset.o sfilter.o filters.o
 obj-m := ad.o
 
-KDIR=/lib/modules/$(shell uname -r)/build
 PWD=$(shell pwd)
 
 all:
