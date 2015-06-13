@@ -2,7 +2,7 @@
 
 #define hexdump(buf, len) print_hex_dump_bytes("", DUMP_PREFIX_OFFSET, (buf), (len))
 
-#define MAX_GET_LINE_LEN    (512) // good enough for us
+#define MAX_GET_PARAMS_LEN  (512) // good enough for us
 #define GET_PREFIX          "GET "
 #define GET_PREFIX_LEN      (sizeof(GET_PREFIX) - 1)
 

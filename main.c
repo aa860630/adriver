@@ -58,55 +58,29 @@ static void should_run_get_sfilter(struct sk_buff *skb, struct buf *buf)
 
     buf->data = NULL;
 
-    if (!skb)
+    // (skb->data is @ IP)
+    if (!skb || !(ip = skb_header_pointer(skb, 0, sizeof(_ip), &_ip)) || IPPROTO_TCP != ip->protocol)
     {
-        pr_debug("skb is null\n");
-        goto done;
+        goto done; // not ip - tcp
     }
 
-    // check for ip
-    // (skb->data is IP now)
-    ip = skb_header_pointer(skb, 0, sizeof(_ip), &_ip);
-    if (!ip)
-    {
-        pr_debug("can't get ip hdr\n");
-        goto done;
-    }
-
-    // check for tcp
-    if (IPPROTO_TCP != ip->protocol)
-    {
-        pr_debug("ipproto != tcp, %d\n", ip->protocol);
-        goto done;
-    }
-
-    // get tcp header
     tcp_off = ip->ihl * 4;
-    tcp = skb_header_pointer(skb, tcp_off, sizeof(_tcp), &_tcp);
-    if (!tcp)
+    if (!(tcp = skb_header_pointer(skb, tcp_off, sizeof(_tcp), &_tcp)) || ntohs(80) != tcp->dest)
     {
-        pr_debug("can't get tcp hdr\n");
-        goto done;
+        goto done; // bad tcp or not dport 80
     }
 
     // reach to tcp data
     data_off = tcp_off + tcp->doff * 4;
-    data = skb_header_pointer(skb, data_off, sizeof(get_buf), get_buf);
-    if (!data)
+    if (!(skb_header_pointer(skb, data_off, sizeof(get_buf), get_buf))
+        || 0 != strncmp(data, GET_PREFIX, GET_PREFIX_LEN))
     {
-        pr_debug("cant't get tcp data\n");
-        goto done;
-    }
-    if (0 != strncmp(data, GET_PREFIX, GET_PREFIX_LEN))
-    {
-        pr_debug("tcp payload is not GET\n");
-        goto done;
+        goto done; // not GET
     }
 
-    pr_debug("tcp data is GET!\n");
-
-    // okay, now get the entire get line
-    data_len = min_t(size_t, skb->len - data_off, MAX_GET_LINE_LEN);
+    // okay, now get some of the GET params (specifically the query string and host field
+    // which convey instersting data)
+    data_len = min_t(size_t, skb->len - data_off, MAX_GET_PARAMS_LEN);
 
     data = my_skb_header_pointer(skb, data_off, data_len, &buf->should_free);
 
@@ -130,40 +104,17 @@ static void should_run_dns_sfilter(struct sk_buff *skb, struct buf *buf)
 
     buf->data = NULL;
 
-    if (!skb)
+    // (skb->data is @ IP)
+    if (!skb || !(ip = skb_header_pointer(skb, 0, sizeof(_ip), &_ip)) || IPPROTO_UDP != ip->protocol)
     {
-        pr_debug("skb is null\n");
-        goto done;
-    }
-
-    // check for ip
-    // (skb->data is IP now)
-    ip = skb_header_pointer(skb, 0, sizeof(_ip), &_ip);
-    if (!ip)
-    {
-        pr_debug("can't get ip hdr\n");
-        goto done;
-    }
-
-    // check for udp
-    if (IPPROTO_UDP != ip->protocol)
-    {
-        pr_debug("ipproto != udp, %d\n", ip->protocol);
-        goto done;
+        goto done; // not ip - udp
     }
 
     // get udp header
     udp_off = ip->ihl * 4;
-    udp = skb_header_pointer(skb, udp_off, sizeof(_udp), &_udp);
-    if (!udp)
+    if (!(udp = skb_header_pointer(skb, udp_off, sizeof(_udp), &_udp)) || 53 != ntohs(udp->dest))
     {
-        pr_debug("can't get udp hdr\n");
-        goto done;
-    }
-    if (53 != ntohs(udp->dest))
-    {
-        pr_debug("udp dport != 53, %d\n", ntohs(udp->dest));
-        goto done;
+        goto done; // bad udp or not dport 53
     }
 
     // reach to udp data
