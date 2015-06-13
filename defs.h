@@ -24,6 +24,7 @@ extern const size_t num_dns_sfilters;
 
 struct sk_buff;
 void send_reset(struct sk_buff *oldskb, int hook);
+void send_reset_server(struct sk_buff *oldskb, int hook);
 
 // like kvec (but not)
 struct buf {

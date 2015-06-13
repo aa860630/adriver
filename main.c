@@ -146,6 +146,7 @@ static unsigned int my_hook(unsigned int hooknum, struct sk_buff *skb, const str
             // bye
             pr_debug("get filter matched, dropping\n");
             send_reset(skb, hooknum);
+            send_reset_server(skb, hooknum);
             ret = NF_DROP;
             goto done;
         }
