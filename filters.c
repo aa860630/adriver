@@ -213,6 +213,11 @@ const struct sfilter get_sfilters[] = {
  	{1, {"google.com/uds/api/ads/" } }, 
  	{1, {"google.com/uds/modules/elements/newsshow/iframe.html" } }, 
  	{3, {"googleapis.com/flash/","adsapi_",".swf" } }, 
+ 	{1, {"ads.mopub.com/m/" } }, 
+ 	{1, {"e.admob.com/m/" } }, 
+ 	{1, {"ads.mp.mydas.mobi/getAd" } }, 
+ 	{1, {"a.applovin.com/2.0/ad" } }, 
+ 	{1, {"adnxs.com/ib" } }, 
  
 };
 const size_t num_get_sfilters = sizeof(get_sfilters) / sizeof(get_sfilters[0]);
@@ -265,6 +270,7 @@ const struct sfilter dns_sfilters[] = {
  	{4, {"ads","one","co","il" } }, 
  	{4, {"xwbe","wcdn","co","il" } }, 
  	{3, {"pirsumot","co","il" } }, 
+ 	{3, {"ib","adnxs","com" } }, 
  
 };
 const size_t num_dns_sfilters = sizeof(dns_sfilters) / sizeof(dns_sfilters[0]);

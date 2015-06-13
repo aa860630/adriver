@@ -208,3 +208,8 @@ google.com/uds/afs?
 google.com/uds/api/ads/
 google.com/uds/modules/elements/newsshow/iframe.html
 googleapis.com/flash/ adsapi_ .swf
+ads.mopub.com/m/
+e.admob.com/m/
+ads.mp.mydas.mobi/getAd
+a.applovin.com/2.0/ad
+adnxs.com/ib
