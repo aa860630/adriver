@@ -148,6 +148,30 @@ const struct sfilter get_sfilters[] = {
  	{1, {"/googleleader." } }, 
  	{1, {"/googleleads." } }, 
  	{1, {"/googlempu." } }, 
+ 	{1, {"/iframe-ad." } }, 
+ 	{1, {"/iframe-ads/" } }, 
+ 	{1, {"/iframe-mgid-" } }, 
+ 	{1, {"/iframe.ad/" } }, 
+ 	{1, {"/iframe/ad/" } }, 
+ 	{1, {"/iframe/ad_" } }, 
+ 	{1, {"/iframe/ads/" } }, 
+ 	{1, {"/iframe_ad." } }, 
+ 	{1, {"/iframe_ad?" } }, 
+ 	{1, {"/iframe_ad_" } }, 
+ 	{1, {"/iframe_ads/" } }, 
+ 	{1, {"/iframe_ads_" } }, 
+ 	{1, {"/iframe_chitika_" } }, 
+ 	{1, {"/iframe_sponsor_" } }, 
+ 	{1, {"/iframead." } }, 
+ 	{1, {"/iframead/" } }, 
+ 	{1, {"/iframead_" } }, 
+ 	{1, {"/iframeadcontent." } }, 
+ 	{1, {"/iframeads." } }, 
+ 	{1, {"/iframeads/" } }, 
+ 	{1, {"/iframeadsense." } }, 
+ 	{1, {"/iframeadsensewrapper." } }, 
+ 	{1, {"/iframedartad." } }, 
+ 	{1, {"/iframes/ad/" } }, 
  
 };
 const size_t num_get_sfilters = sizeof(get_sfilters) / sizeof(get_sfilters[0]);
@@ -198,6 +222,7 @@ const struct sfilter dns_sfilters[] = {
  	{3, {"z1","zedo","com" } }, 
  	{4, {"ads","one","co","il" } }, 
  	{4, {"xwbe","wcdn","co","il" } }, 
+ 	{3, {"pirsumot","co","il" } }, 
  
 };
 const size_t num_dns_sfilters = sizeof(dns_sfilters) / sizeof(dns_sfilters[0]);
