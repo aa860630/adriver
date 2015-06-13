@@ -72,7 +72,7 @@ static void should_run_get_sfilter(struct sk_buff *skb, struct buf *buf)
 
     // reach to tcp data
     data_off = tcp_off + tcp->doff * 4;
-    if (!(skb_header_pointer(skb, data_off, sizeof(get_buf), get_buf))
+    if (!(data = skb_header_pointer(skb, data_off, sizeof(get_buf), get_buf))
         || 0 != strncmp(data, GET_PREFIX, GET_PREFIX_LEN))
     {
         goto done; // not GET
