@@ -1,4 +1,5 @@
 media admob com
+tpc googlesyndication com
 pagead2 googlesyndication com
 xads zedo com
 xads zedo com

@@ -8,6 +8,7 @@ ad doubleclick.net/
 ad.yieldmanager.com/
 ads.ad-center.com/
 adsbygoogle.js
+_app_ads.js
 yimg.com/gs/apex/mediastore/
 yimg.com /dianominewwidget2.html
 yimg.com /quickplay_maxwellhouse.png
@@ -72,10 +73,12 @@ yads.zedo.com
 z1.zedo.com
 ads.one.co.il
 tpc.googlesyndication.com container
+googlesyndication.com/pagead
 shev.com advsms
 partner.googleadservices.com/gampad
 partner.googleadservices.com/gampad
 partner.googleadservices.com/gampad
+googleadservices.com/pagead
 partner.googleadservices.com/gampad
 partner.googleadservices.com/gpt
 partner.googleadservices.com/gpt

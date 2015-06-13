@@ -13,6 +13,7 @@ const struct sfilter get_sfilters[] = {
  	{1, {"ad.yieldmanager.com/" } }, 
  	{1, {"ads.ad-center.com/" } }, 
  	{1, {"adsbygoogle.js" } }, 
+ 	{1, {"_app_ads.js" } }, 
  	{1, {"yimg.com/gs/apex/mediastore/" } }, 
  	{2, {"yimg.com","/dianominewwidget2.html" } }, 
  	{2, {"yimg.com","/quickplay_maxwellhouse.png" } }, 
@@ -77,10 +78,12 @@ const struct sfilter get_sfilters[] = {
  	{1, {"z1.zedo.com" } }, 
  	{1, {"ads.one.co.il" } }, 
  	{2, {"tpc.googlesyndication.com","container" } }, 
+ 	{1, {"googlesyndication.com/pagead" } }, 
  	{2, {"shev.com","advsms" } }, 
  	{1, {"partner.googleadservices.com/gampad" } }, 
  	{1, {"partner.googleadservices.com/gampad" } }, 
  	{1, {"partner.googleadservices.com/gampad" } }, 
+ 	{1, {"googleadservices.com/pagead" } }, 
  	{1, {"partner.googleadservices.com/gampad" } }, 
  	{1, {"partner.googleadservices.com/gpt" } }, 
  	{1, {"partner.googleadservices.com/gpt" } }, 
@@ -179,6 +182,7 @@ const size_t num_get_sfilters = sizeof(get_sfilters) / sizeof(get_sfilters[0]);
 
 const struct sfilter dns_sfilters[] = {
 	{3, {"media","admob","com" } }, 
+ 	{3, {"tpc","googlesyndication","com" } }, 
  	{3, {"pagead2","googlesyndication","com" } }, 
  	{3, {"xads","zedo","com" } }, 
  	{3, {"xads","zedo","com" } }, 
