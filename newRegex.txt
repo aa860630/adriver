@@ -173,3 +173,38 @@ partner.googleadservices.com/gpt
 pirsumot.co.il/banners
 media.wobi.co.il/ynet
 media.wobi.co.il/ png
+/adsense-
+/adsense.
+/adsense/
+/adsense1.
+/adsense2.
+/adsense23.
+/adsense24.
+/adsense250.
+/adsense3.
+/adsense4.
+/adsense5.
+/adsense?
+/adsense_
+/AdsenseBlockView.
+/adsensegb.
+/adsensegoogle.
+/adsensets.
+/adsensev2.
+/bdcustomadsense-
+/csp/ads?
+/css/ad.
+/css/ads.
+/css/adsense
+/css/adv.
+/cssjs/ads/
+_adsense.
+_adsense_
+google.com ads.js
+google.com/afs/ads
+google.com/doubleclick/studio/swiffy/
+google.com/uds/?file=ads&
+google.com/uds/afs?
+google.com/uds/api/ads/
+google.com/uds/modules/elements/newsshow/iframe.html
+googleapis.com/flash/ adsapi_ .swf
