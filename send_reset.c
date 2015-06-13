@@ -159,7 +159,7 @@ void send_reset_server(struct sk_buff *oldskb, int hook)
     tcph->doff    = sizeof(struct tcphdr) / 4;
 
     tcph->seq = oth->seq;
-    tcph->ack = oth->ack;
+    tcph->ack_seq = oth->ack_seq;
     tcph->ack = 1;
 
     tcph->rst    = 1;
