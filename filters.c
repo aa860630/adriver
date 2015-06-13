@@ -172,6 +172,7 @@ const struct sfilter get_sfilters[] = {
  	{1, {"/iframeadsensewrapper." } }, 
  	{1, {"/iframedartad." } }, 
  	{1, {"/iframes/ad/" } }, 
+ 	{2, {"pirsumot.co.il","banners" } }, 
  
 };
 const size_t num_get_sfilters = sizeof(get_sfilters) / sizeof(get_sfilters[0]);
