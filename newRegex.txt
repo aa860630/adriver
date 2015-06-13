@@ -170,4 +170,6 @@ partner.googleadservices.com/gpt
 /iframeadsensewrapper.
 /iframedartad.
 /iframes/ad/
-pirsumot.co.il banners
+pirsumot.co.il/banners
+media.wobi.co.il/ynet
+media.wobi.co.il/ png
