@@ -176,6 +176,7 @@ done:
     return ret;
 }
 static struct nf_hook_ops my_ops = {
+    .owner = THIS_MODULE,
     .hook = my_hook,
     .pf = NFPROTO_IPV4,
     .hooknum = NF_INET_LOCAL_OUT
