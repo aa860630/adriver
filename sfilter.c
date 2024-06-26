@@ -35,7 +35,7 @@ static bool run_sfilter(const struct sfilter *sf, const struct buf *buf)
     {
         match = sf->matches[i];
         match_len = strlen(match);
-
+       
         pos = memmem(pos, left, match, match_len);
         if (!pos)
         {

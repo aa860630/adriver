@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "netfilter_bridge.h": "c",
+        "netdevice.h": "c"
+    }
+}
